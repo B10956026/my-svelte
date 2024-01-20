@@ -30,7 +30,7 @@
 	}
 
 	.success {
-		color:olive;
+		color:green;
 	}
 
 	.promoted {
