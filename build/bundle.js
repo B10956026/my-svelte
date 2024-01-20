@@ -27,6 +27,9 @@ var app = (function () {
     function is_empty(obj) {
         return Object.keys(obj).length === 0;
     }
+    function null_to_empty(value) {
+        return value == null ? '' : value;
+    }
     function append(target, node) {
         target.appendChild(node);
     }
@@ -55,6 +58,9 @@ var app = (function () {
     }
     function children(element) {
         return Array.from(element.childNodes);
+    }
+    function toggle_class(element, name, toggle) {
+        element.classList[toggle ? 'add' : 'remove'](name);
     }
     function custom_event(type, detail, { bubbles = false, cancelable = false } = {}) {
         const e = document.createEvent('CustomEvent');
@@ -367,62 +373,92 @@ var app = (function () {
 
     function create_fragment(ctx) {
     	let main;
-    	let h1;
+    	let h20;
+    	let t1;
+    	let h21;
     	let t2;
-    	let div0;
     	let t3;
-    	let div1;
-    	let t4;
-    	let h2;
+    	let h22;
     	let t5;
-    	let t6;
+    	let h1;
+    	let t8;
+    	let div0;
+    	let t9;
+    	let div1;
+    	let t10;
+    	let h23;
+    	let t11;
+    	let t12;
     	let button;
-    	let t7;
+    	let t13;
 
     	const block = {
     		c: function create() {
     			main = element("main");
+    			h20 = element("h2");
+    			h20.textContent = "Underlined Text";
+    			t1 = space();
+    			h21 = element("h2");
+    			t2 = text("Status");
+    			t3 = space();
+    			h22 = element("h2");
+    			h22.textContent = "Movie Title";
+    			t5 = space();
     			h1 = element("h1");
     			h1.textContent = `B10956026 ${name}`;
-    			t2 = space();
+    			t8 = space();
     			div0 = element("div");
-    			t3 = space();
+    			t9 = space();
     			div1 = element("div");
-    			t4 = space();
-    			h2 = element("h2");
-    			t5 = text("This is a heading");
-    			t6 = space();
+    			t10 = space();
+    			h23 = element("h2");
+    			t11 = text("This is a heading");
+    			t12 = space();
     			button = element("button");
-    			t7 = text("Bind");
-    			attr_dev(h1, "class", "svelte-1tky8bj");
-    			add_location(h1, file, 9, 1, 222);
-    			add_location(div0, file, 10, 1, 249);
-    			add_location(div1, file, 11, 1, 277);
-    			attr_dev(h2, "id", id);
-    			add_location(h2, file, 12, 1, 302);
+    			t13 = text("Bind");
+    			attr_dev(h20, "class", "underline svelte-1bn0628");
+    			add_location(h20, file, 11, 1, 271);
+    			attr_dev(h21, "class", "" + (null_to_empty(status) + " svelte-1bn0628"));
+    			add_location(h21, file, 12, 1, 315);
+    			attr_dev(h22, "class", "svelte-1bn0628");
+    			toggle_class(h22, "promoted", promoted);
+    			add_location(h22, file, 13, 1, 347);
+    			attr_dev(h1, "class", "svelte-1bn0628");
+    			add_location(h1, file, 15, 1, 386);
+    			add_location(div0, file, 16, 1, 413);
+    			add_location(div1, file, 17, 1, 441);
+    			attr_dev(h23, "id", id);
+    			add_location(h23, file, 18, 1, 466);
     			button.disabled = disabled;
-    			add_location(button, file, 13, 1, 335);
-    			attr_dev(main, "class", "svelte-1tky8bj");
-    			add_location(main, file, 8, 0, 214);
+    			add_location(button, file, 19, 1, 499);
+    			attr_dev(main, "class", "svelte-1bn0628");
+    			add_location(main, file, 10, 0, 263);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, main, anchor);
+    			append_dev(main, h20);
+    			append_dev(main, t1);
+    			append_dev(main, h21);
+    			append_dev(h21, t2);
+    			append_dev(main, t3);
+    			append_dev(main, h22);
+    			append_dev(main, t5);
     			append_dev(main, h1);
-    			append_dev(main, t2);
+    			append_dev(main, t8);
     			append_dev(main, div0);
     			div0.innerHTML = channel;
-    			append_dev(main, t3);
+    			append_dev(main, t9);
     			append_dev(main, div1);
     			div1.innerHTML = /*hack*/ ctx[0];
-    			append_dev(main, t4);
-    			append_dev(main, h2);
-    			append_dev(h2, t5);
-    			append_dev(main, t6);
+    			append_dev(main, t10);
+    			append_dev(main, h23);
+    			append_dev(h23, t11);
+    			append_dev(main, t12);
     			append_dev(main, button);
-    			append_dev(button, t7);
+    			append_dev(button, t13);
     		},
     		p: noop,
     		i: noop,
@@ -447,6 +483,8 @@ var app = (function () {
     const channel = '<b>國立屏東科技大學 資訊管理系</b>';
     const id = 'heading';
     const disabled = false;
+    const status = 'success';
+    const promoted = true;
 
     function instance($$self, $$props, $$invalidate) {
     	let { $$slots: slots = {}, $$scope } = $$props;
@@ -458,7 +496,16 @@ var app = (function () {
     		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console.warn(`<App> was created with unknown prop '${key}'`);
     	});
 
-    	$$self.$capture_state = () => ({ name, channel, hack, id, disabled });
+    	$$self.$capture_state = () => ({
+    		name,
+    		channel,
+    		hack,
+    		id,
+    		disabled,
+    		status,
+    		promoted
+    	});
+
     	return [hack];
     }
 
